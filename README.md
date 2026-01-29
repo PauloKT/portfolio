@@ -109,5 +109,3 @@ Este projeto é de código aberto e está disponível para uso pessoal e comerci
 Sinta-se à vontade para fazer fork, melhorar e personalizar este portfólio!
 
 ---
-
-Desenvolvido com ❤️
