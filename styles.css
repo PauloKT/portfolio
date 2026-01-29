@@ -629,19 +629,24 @@ body {
 
 .gallery-modal-content {
     position: relative;
-    max-width: 90vw;
-    max-height: 90vh;
+    /* fixed modal image size via CSS variables for consistent display */
+    --gallery-img-width: min(1000px, 80vw);
+    --gallery-img-height: min(700px, 80vh);
+    max-width: 100%;
+    max-height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .gallery-modal-img {
-    max-width: 100%;
-    max-height: 100%;
+    /* Force a consistent visible box for all images */
+    width: var(--gallery-img-width);
+    height: var(--gallery-img-height);
     object-fit: contain;
     border-radius: 10px;
     animation: zoomIn 0.3s ease;
+    background: #000; /* avoids transparent gaps on letterbox */
 }
 
 .gallery-modal-close {
@@ -675,27 +680,32 @@ body {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    color: white;
+    color: var(--primary-color);
     font-size: 36px;
     font-weight: bold;
     cursor: pointer;
-    padding: 10px 20px;
-    transition: color 0.3s ease;
+    padding: 4px 8px; /* small padding so only arrow is visible */
+    transition: color 0.15s ease, transform 0.15s ease;
     z-index: 2001;
     user-select: none;
+    background: transparent; /* no circular background */
+    border-radius: 0;
+    box-shadow: none;
 }
 
+/* Position the arrows outside the image box on desktop by calculating from center */
 .gallery-modal-prev {
-    left: -15px;
+    left: calc(50% - (var(--gallery-img-width) / 2) - 48px);
 }
 
 .gallery-modal-next {
-    right: -15px;
+    right: calc(50% - (var(--gallery-img-width) / 2) - 48px);
 }
 
 .gallery-modal-prev:hover,
 .gallery-modal-next:hover {
-    color: var(--primary-color);
+    transform: translateY(-50%) scale(1.06);
+    color: var(--primary-dark);
 }
 
 @keyframes fadeIn {
@@ -738,13 +748,22 @@ body {
         height: 44px;
     }
     
+    /* Reduce modal image size on tablet and move arrows closer to edges */
+    .gallery-modal-content {
+        --gallery-img-width: calc(100vw - 120px);
+        --gallery-img-height: calc(70vh);
+    }
+
     .gallery-modal-prev,
     .gallery-modal-next {
-        font-size: 24px;
-        padding: 5px 10px;
-        left: 5px;
-        right: 5px;
+        font-size: 22px;
+        padding: 8px 10px;
+        left: 12px; /* fallback for small widths */
+        right: 12px;
     }
+
+    .gallery-modal-prev { left: 12px; right: auto; }
+    .gallery-modal-next { right: 12px; left: auto; }
 }
 
 @media (max-width: 480px) {
@@ -835,6 +854,23 @@ body {
         background-color: var(--primary-color);
         opacity: 1;
     }
+
+    /* Make modal image nearly full-width on very small screens */
+    .gallery-modal-content {
+        --gallery-img-width: calc(100vw - 48px);
+        --gallery-img-height: calc(80vw);
+    }
+
+    .gallery-modal-prev,
+    .gallery-modal-next {
+        font-size: 20px;
+        padding: 6px 8px;
+        left: 8px;
+        right: 8px;
+    }
+
+    .gallery-modal-prev { left: 8px; right: auto; }
+    .gallery-modal-next { right: 8px; left: auto; }
 }
 
 /* Contato */
@@ -911,6 +947,18 @@ body {
 
 .contact-icon {
     font-size: 2rem;
+}
+
+.contact-meme {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.contact-meme img {
+    max-width: 150px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
 }
 
 /* Footer */

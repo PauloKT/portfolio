@@ -131,7 +131,7 @@ document.addEventListener('click', async (e) => {
 const galleryImages = [
     'Img/captura_reviva_1.png',
     'Img/captura_reviva_2.png',
-    'Img/captura_on_1.png',
+    'Img/captura_on_3.png',
     'Img/captura_on_2.png',
     'Img/captura_quiz_2.png',
     'Img/captura_quiz_3.png'
@@ -143,8 +143,11 @@ let currentGalleryIndex = 0;
 function initGalleryDots() {
     const dotsContainer = document.getElementById('galleryDots');
     if (dotsContainer) {
+        // clear any existing dots to prevent duplicates when this runs multiple times
+        dotsContainer.innerHTML = '';
         galleryImages.forEach((_, index) => {
             const dot = document.createElement('button');
+            dot.type = 'button';
             dot.className = `gallery-dot ${index === 0 ? 'active' : ''}`;
             dot.onclick = (e) => {
                 e.stopPropagation();
